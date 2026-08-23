@@ -59,7 +59,7 @@
                 </div>
                 <div class="detail-item">
                     <span class="detail-label">📅 Qeydiyyat Tarixi</span>
-                    <span class="detail-value">{{ user.created_at.strftime('%d.%m.%Y') }}</span>
+                    <span class="detail-value">{{ user.created_at|string }}</span>
                 </div>
             </div>
         </div>

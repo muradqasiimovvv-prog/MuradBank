@@ -13,9 +13,9 @@ Tracks every intentionally-planted vulnerability from discovery through remediat
 | PT-05 | CSRF — Money Transfer | High | CWE-352 | 🟡 Found — fix pending | **Murad** (found independently) | [PT-05](reports/PT-05-CSRF-Money-Transfer.md) |
 | PT-06 | Unrestricted File Upload — Avatar | High | CWE-434 | 🟡 Found — fix pending | **Murad** (found independently) | [PT-06](reports/PT-06-Unrestricted-File-Upload.md) |
 | PT-07 | SSRF — Admin URL Check | Medium | CWE-918 | 🟡 Found — fix pending | **Murad** (found independently) | [PT-07](reports/PT-07-SSRF-Admin-URL-Check.md) |
-| PT-08 | Business Logic Flaw — Transfer Validation | Medium | CWE-840 | 🔲 Pending | *your turn* | — |
+| PT-08 | Business Logic Flaw — Amount Validation (NaN crash + debug info leak) | Medium | CWE-20 | 🟡 Found — fix pending | **Murad** (found independently) | [PT-08](reports/PT-08-Business-Logic-Amount-Validation.md) |
 
-**Progress: 2 / 8 closed, 5 / 8 found (fix pending)**
+**Progress: 2 / 8 closed, 6 / 8 found — all 8 discovered! 🎉**
 
 ---
 

@@ -91,7 +91,7 @@ Full findings register with status, before/after fixes, and methodology: **[docs
 | PT-05 | CSRF (Cross-Site Request Forgery) | High | CWE-352 | A01 | 🟡 Found — [report](docs/reports/PT-05-CSRF-Money-Transfer.md) |
 | PT-06 | Unsafe File Upload | High | CWE-434 | A04 | 🟡 Found — [report](docs/reports/PT-06-Unrestricted-File-Upload.md) |
 | PT-07 | SSRF (Server-Side Request Forgery) | Medium | CWE-918 | A10 | 🟡 Found — [report](docs/reports/PT-07-SSRF-Admin-URL-Check.md) |
-| PT-08 | Business Logic Flaw | Medium | CWE-840 | A04 | 🔲 Open |
+| PT-08 | Business Logic Flaw (amount validation) | Medium | CWE-20 | A04 | 🟡 Found — [report](docs/reports/PT-08-Business-Logic-Amount-Validation.md) |
 
 > Endpoints and exploitation details for open findings are intentionally not published here — this is a hands-on pentest exercise. See `docs/reports/` for the two closed findings' full write-ups (including endpoint, PoC, and fix) once you're ready to compare notes.
 
@@ -155,7 +155,7 @@ muradbank/
 
 ## 🔐 Vulnerability Status
 
-2 of 8 intentional vulnerabilities have been found, exploited, documented, and fixed as worked examples — see [docs/FINDINGS-SUMMARY.md](docs/FINDINGS-SUMMARY.md) for the full before/after and methodology. The remaining 6 are open, to be discovered through hands-on testing (Burp Suite, curl, browser DevTools) rather than read off this page.
+All 8 intentional vulnerabilities have been found and documented through hands-on testing (Burp Suite, curl, browser DevTools) — see [docs/FINDINGS-SUMMARY.md](docs/FINDINGS-SUMMARY.md) for full reports, PoCs, and remediation status. 2 have been fixed as worked examples; the remaining 6 are documented and awaiting a final remediation pass.
 
 ## 🧪 Testing Methodology
 

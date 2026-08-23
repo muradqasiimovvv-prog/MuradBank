@@ -1,6 +1,7 @@
 from flask import Blueprint, request, session, jsonify
 from app.database import db
-from app.models import Transaction
+from app.models import Transaction, Account
+from sqlalchemy import select
 
 api_bp = Blueprint('api', __name__, url_prefix='/api')
 
@@ -45,8 +46,7 @@ def get_account_info(account_id):
         return jsonify({'error': 'Unauthorized'}), 401
 
     # VULNERABLE: No authorization check!
-    from app.models import Account
-    account = Account.query.get(account_id)
+    account = db.session.get(Account, account_id)
 
     if not account:
         return jsonify({'error': 'Account not found'}), 404

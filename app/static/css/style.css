@@ -74,6 +74,83 @@ body {
 }
 
 /* Auth Pages */
+.auth-page {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    min-height: 100vh;
+    background: white;
+}
+
+.auth-left {
+    background: linear-gradient(135deg, #FF5722 0%, #FF9800 100%);
+    color: white;
+    padding: 60px 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.auth-promo {
+    text-align: center;
+}
+
+.promo-badge {
+    font-size: 64px;
+    margin-bottom: 1rem;
+    display: inline-block;
+}
+
+.auth-left h2 {
+    font-size: 32px;
+    margin-bottom: 0.5rem;
+}
+
+.auth-left p {
+    font-size: 16px;
+    opacity: 0.9;
+    margin-bottom: 2rem;
+}
+
+.promo-features {
+    margin-bottom: 2rem;
+    text-align: left;
+    background: rgba(255,255,255,0.1);
+    padding: 1.5rem;
+    border-radius: 12px;
+}
+
+.promo-feature {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1rem;
+    font-size: 14px;
+}
+
+.promo-feature:last-child {
+    margin-bottom: 0;
+}
+
+.promo-feature .icon {
+    background: white;
+    color: #FF5722;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    flex-shrink: 0;
+}
+
+.auth-right {
+    padding: 60px 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
 .auth-container {
     display: flex;
     justify-content: center;
@@ -84,17 +161,29 @@ body {
 
 .auth-card {
     background: white;
-    padding: 2rem;
-    border-radius: 8px;
-    box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+    padding: 2.5rem;
+    border-radius: 12px;
+    box-shadow: 0 12px 32px rgba(0,0,0,0.15);
     width: 100%;
-    max-width: 400px;
+    max-width: 420px;
 }
 
 .auth-card h1 {
     color: var(--primary);
     margin-bottom: 0.5rem;
     text-align: center;
+}
+
+.auth-title {
+    font-size: 28px;
+    margin-bottom: 0.5rem;
+}
+
+.auth-subtitle {
+    text-align: center;
+    color: var(--gray);
+    margin-bottom: 2rem;
+    font-size: 14px;
 }
 
 .subtitle {
@@ -203,6 +292,116 @@ body {
 
 .btn-block {
     width: 100%;
+    display: block;
+}
+
+/* Auth Additional Styles */
+.remember-forgot {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+    font-size: 14px;
+}
+
+.remember-forgot label {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    cursor: pointer;
+}
+
+.remember-forgot a {
+    color: var(--primary);
+    text-decoration: none;
+}
+
+.remember-forgot a:hover {
+    text-decoration: underline;
+}
+
+.auth-divider {
+    text-align: center;
+    margin: 1.5rem 0;
+    color: var(--gray);
+    font-size: 14px;
+    position: relative;
+}
+
+.auth-divider::before {
+    content: '';
+    display: block;
+    height: 1px;
+    background: #EEE;
+    position: absolute;
+    top: 50%;
+    left: 0;
+    right: 0;
+}
+
+.auth-divider span {
+    background: white;
+    padding: 0 1rem;
+    position: relative;
+}
+
+.demo-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 12px;
+    margin-top: 0.5rem;
+}
+
+.demo-table tr {
+    border-bottom: 1px solid #EEE;
+}
+
+.demo-table td {
+    padding: 0.75rem;
+    text-align: left;
+}
+
+.demo-table tr:last-child {
+    border-bottom: none;
+}
+
+.auth-footer {
+    text-align: center;
+    margin-top: 2rem;
+    padding-top: 2rem;
+    border-top: 1px solid #EEE;
+    font-size: 12px;
+}
+
+.auth-footer a {
+    color: var(--primary);
+    text-decoration: none;
+}
+
+.auth-footer a:hover {
+    text-decoration: underline;
+}
+
+.auth-footer span {
+    margin: 0 0.5rem;
+    color: var(--gray);
+}
+
+.terms-checkbox {
+    margin-bottom: 1.5rem;
+}
+
+.terms-checkbox label {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 13px;
+    cursor: pointer;
+    color: var(--gray);
+}
+
+.terms-checkbox input[type="checkbox"] {
+    cursor: pointer;
 }
 
 .auth-link {
@@ -516,6 +715,20 @@ body {
 }
 
 /* Responsive */
+@media (max-width: 992px) {
+    .auth-page {
+        grid-template-columns: 1fr;
+    }
+
+    .auth-left {
+        display: none;
+    }
+
+    .auth-right {
+        padding: 40px 20px;
+    }
+}
+
 @media (max-width: 768px) {
     .nav-links {
         gap: 1rem;

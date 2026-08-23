@@ -17,7 +17,7 @@ def index():
     if check:
         return check
 
-    user = User.query.get(session['user_id'])
+    user = db.session.get(User, session['user_id'])
     return render_template('profile.html', user=user)
 
 @profile_bp.route('/edit', methods=['GET', 'POST'])
@@ -26,7 +26,7 @@ def edit():
     if check:
         return check
 
-    user = User.query.get(session['user_id'])
+    user = db.session.get(User, session['user_id'])
 
     if request.method == 'POST':
         user.full_name = request.form.get('full_name')

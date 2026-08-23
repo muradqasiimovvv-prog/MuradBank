@@ -1,40 +1,86 @@
 {% extends "base.html" %}
 
-{% block title %}Register - MuradBank{% endblock %}
+{% block title %}Hesab Açın - MuradBank{% endblock %}
 
 {% block content %}
-<div class="auth-container">
-    <div class="auth-card">
-        <h1>Create Account</h1>
-        <p class="subtitle">Join MuradBank Today</p>
+<div class="auth-page auth-page-register">
+    <div class="auth-left">
+        <div class="auth-promo">
+            <div class="promo-badge">🎁</div>
+            <h2>İndi Qeydiyyat Olun</h2>
+            <p>Xüsusi bonus və təkliflər alın</p>
 
-        <form method="POST" class="auth-form">
-            <div class="form-group">
-                <label for="username">Username</label>
-                <input type="text" id="username" name="username" required>
+            <div class="promo-features">
+                <div class="promo-feature">
+                    <span class="icon">✓</span>
+                    <span>500 AZN ilk bonus</span>
+                </div>
+                <div class="promo-feature">
+                    <span class="icon">✓</span>
+                    <span>3% cashback hər transferdə</span>
+                </div>
+                <div class="promo-feature">
+                    <span class="icon">✓</span>
+                    <span>Pulsuz debit kartı</span>
+                </div>
+                <div class="promo-feature">
+                    <span class="icon">✓</span>
+                    <span>Sıfır komissiya</span>
+                </div>
             </div>
 
-            <div class="form-group">
-                <label for="email">Email</label>
-                <input type="email" id="email" name="email" required>
+            <a href="{{ url_for('auth.login') }}" class="btn btn-secondary">Hesabım Var</a>
+        </div>
+    </div>
+
+    <div class="auth-right">
+        <div class="auth-card">
+            <h1 class="auth-title">Hesab Açın</h1>
+            <p class="auth-subtitle">MuradBank ailəsinə qoşulun</p>
+
+            <form method="POST" class="auth-form">
+                <div class="form-group">
+                    <label for="full_name">Ad Soyadı</label>
+                    <input type="text" id="full_name" name="full_name" placeholder="Tam ad" required autofocus>
+                </div>
+
+                <div class="form-group">
+                    <label for="username">İstifadəçi Adı</label>
+                    <input type="text" id="username" name="username" placeholder="Unikal istifadəçi adı" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="email">E-poçt</label>
+                    <input type="email" id="email" name="email" placeholder="E-poçtunuz" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="password">Şifrə</label>
+                    <input type="password" id="password" name="password" placeholder="Güclü şifrə seçin" required>
+                </div>
+
+                <div class="terms-checkbox">
+                    <label>
+                        <input type="checkbox" required>
+                        Fərağə siyasətini qəbul edirəm
+                    </label>
+                </div>
+
+                <button type="submit" class="btn btn-primary btn-block">Hesab Açın</button>
+            </form>
+
+            <div class="auth-divider">
+                <span>Artıq qeydiyyatlı?</span>
             </div>
 
-            <div class="form-group">
-                <label for="full_name">Full Name</label>
-                <input type="text" id="full_name" name="full_name" required>
+            <a href="{{ url_for('auth.login') }}" class="btn btn-secondary btn-block">Giriş Et</a>
+
+            <div class="auth-footer">
+                <a href="#">Fərağə Siyasəti</a>
+                <span>•</span>
+                <a href="#">İstifadə Şərtləri</a>
             </div>
-
-            <div class="form-group">
-                <label for="password">Password</label>
-                <input type="password" id="password" name="password" required>
-            </div>
-
-            <button type="submit" class="btn btn-primary">Create Account</button>
-        </form>
-
-        <p class="auth-link">
-            Already have an account? <a href="{{ url_for('auth.login') }}">Login here</a>
-        </p>
+        </div>
     </div>
 </div>
 {% endblock %}

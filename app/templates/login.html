@@ -1,38 +1,93 @@
 {% extends "base.html" %}
 
-{% block title %}Login - MuradBank{% endblock %}
+{% block title %}Giriş Et - MuradBank{% endblock %}
 
 {% block content %}
-<div class="auth-container">
-    <div class="auth-card">
-        <h1>MuradBank</h1>
-        <p class="subtitle">Digital Banking Platform</p>
+<div class="auth-page">
+    <div class="auth-left">
+        <div class="auth-promo">
+            <div class="promo-badge">🏦</div>
+            <h2>MuradBank-a Xoş Gəldiniz</h2>
+            <p>Tez, Güvənli və Əlçatan Bankçılıq</p>
 
-        <form method="POST" class="auth-form">
-            <div class="form-group">
-                <label for="username">Username</label>
-                <input type="text" id="username" name="username" required>
+            <div class="promo-features">
+                <div class="promo-feature">
+                    <span class="icon">✓</span>
+                    <span>24/7 Rəqəmsal Xidmət</span>
+                </div>
+                <div class="promo-feature">
+                    <span class="icon">✓</span>
+                    <span>Sıfır Komissiyalı Transfer</span>
+                </div>
+                <div class="promo-feature">
+                    <span class="icon">✓</span>
+                    <span>Maksimal Güvənlik</span>
+                </div>
+                <div class="promo-feature">
+                    <span class="icon">✓</span>
+                    <span>Bonuslar və Cashback</span>
+                </div>
             </div>
 
-            <div class="form-group">
-                <label for="password">Password</label>
-                <input type="password" id="password" name="password" required>
+            <a href="{{ url_for('auth.register') }}" class="btn btn-secondary">Hesab Açın</a>
+        </div>
+    </div>
+
+    <div class="auth-right">
+        <div class="auth-card">
+            <h1 class="auth-title">Giriş Et</h1>
+            <p class="auth-subtitle">Hesabınıza daxil olun</p>
+
+            <form method="POST" class="auth-form">
+                <div class="form-group">
+                    <label for="username">İstifadəçi Adı</label>
+                    <input type="text" id="username" name="username" placeholder="İstifadəçi adınız" required autofocus>
+                </div>
+
+                <div class="form-group">
+                    <label for="password">Şifrə</label>
+                    <input type="password" id="password" name="password" placeholder="Şifrəniz" required>
+                </div>
+
+                <div class="remember-forgot">
+                    <label>
+                        <input type="checkbox" name="remember"> Məni Xatırla
+                    </label>
+                    <a href="#">Şifrəni Unutdum?</a>
+                </div>
+
+                <button type="submit" class="btn btn-primary btn-block">Giriş Et</button>
+            </form>
+
+            <div class="auth-divider">
+                <span>Yeni istifadəçi?</span>
             </div>
 
-            <button type="submit" class="btn btn-primary">Login</button>
-        </form>
+            <a href="{{ url_for('auth.register') }}" class="btn btn-secondary btn-block">Hesab Açın</a>
 
-        <p class="auth-link">
-            Don't have an account? <a href="{{ url_for('auth.register') }}">Register here</a>
-        </p>
+            <div class="demo-credentials">
+                <h4>📋 Demo Hesabları:</h4>
+                <table class="demo-table">
+                    <tr>
+                        <td><strong>alice</strong></td>
+                        <td>password123</td>
+                    </tr>
+                    <tr>
+                        <td><strong>bob</strong></td>
+                        <td>password123</td>
+                    </tr>
+                    <tr>
+                        <td><strong>admin</strong></td>
+                        <td>admin123</td>
+                    </tr>
+                </table>
+            </div>
 
-        <div class="demo-credentials">
-            <h4>Demo Credentials:</h4>
-            <ul>
-                <li><strong>User:</strong> alice / password123</li>
-                <li><strong>User:</strong> bob / password123</li>
-                <li><strong>Admin:</strong> admin / admin123</li>
-            </ul>
+            <div class="auth-footer">
+                <a href="#">Fərağə Siyasəti</a>
+                <span>•</span>
+                <a href="#">İstifadə Şərtləri</a>
+            </div>
         </div>
     </div>
 </div>

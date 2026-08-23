@@ -1,5 +1,7 @@
 from flask import Blueprint, render_template, session, redirect, url_for
-from app.models import User, Account, Transaction
+from app.database import db
+from app.models import Account, Transaction
+from sqlalchemy import select, or_
 
 accounts_bp = Blueprint('accounts', __name__, url_prefix='/accounts')
 
@@ -15,7 +17,7 @@ def index():
         return check
 
     # Show only current user's accounts
-    accounts = Account.query.filter_by(user_id=session['user_id']).all()
+    accounts = db.session.scalars(select(Account).filter_by(user_id=session['user_id'])).all()
     return render_template('accounts.html', accounts=accounts)
 
 @accounts_bp.route('/<int:account_id>')
@@ -26,15 +28,15 @@ def view_account(account_id):
 
     # VULNERABLE: No authorization check!
     # Can access any account by changing account_id
-    account = Account.query.get(account_id)
+    account = db.session.get(Account, account_id)
 
     if not account:
         return "Account not found", 404
 
-    transactions = Transaction.query.filter(
-        (Transaction.from_account_id == account_id) |
-        (Transaction.to_account_id == account_id)
-    ).all()
+    transactions = db.session.scalars(select(Transaction).filter(
+        or_(Transaction.from_account_id == account_id,
+            Transaction.to_account_id == account_id)
+    )).all()
 
     return render_template('account_detail.html',
                          account=account,

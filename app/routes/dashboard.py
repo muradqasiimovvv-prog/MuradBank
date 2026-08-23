@@ -1,5 +1,7 @@
 from flask import Blueprint, render_template, session, redirect, url_for
+from app.database import db
 from app.models import User, Account, Transaction
+from sqlalchemy import select
 
 dashboard_bp = Blueprint('dashboard', __name__, url_prefix='/dashboard')
 
@@ -14,9 +16,9 @@ def index():
     if check:
         return check
 
-    user = User.query.get(session['user_id'])
-    accounts = Account.query.filter_by(user_id=session['user_id']).all()
-    transactions = Transaction.query.filter_by(user_id=session['user_id']).all()
+    user = db.session.get(User, session['user_id'])
+    accounts = db.session.scalars(select(Account).filter_by(user_id=session['user_id'])).all()
+    transactions = db.session.scalars(select(Transaction).filter_by(user_id=session['user_id'])).all()
 
     total_balance = sum(acc.balance for acc in accounts)
 

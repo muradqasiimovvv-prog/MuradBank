@@ -7,7 +7,15 @@ def create_app(config_name='development'):
     app.config.from_object(config[config_name])
 
     # Initialize database
-    init_db(app)
+    db.init_app(app)
+
+    # Import models before creating tables
+    from app.models import User, Account, Transaction, Message, Beneficiary
+
+    with app.app_context():
+        db.create_all()
+        from app.database import seed_database
+        seed_database()
 
     # Register blueprints
     from app.routes import auth_bp, dashboard_bp, accounts_bp, transfer_bp, messages_bp, profile_bp, admin_bp, api_bp

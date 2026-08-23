@@ -1,6 +1,7 @@
 from flask import Blueprint, render_template, request, session, redirect, url_for, flash, jsonify
 from app.database import db
 from app.models import Account, Transaction
+from sqlalchemy import select
 
 transfer_bp = Blueprint('transfer', __name__, url_prefix='/transfer')
 
@@ -15,7 +16,7 @@ def index():
     if check:
         return check
 
-    accounts = Account.query.filter_by(user_id=session['user_id']).all()
+    accounts = db.session.scalars(select(Account).filter_by(user_id=session['user_id'])).all()
     return render_template('transfer.html', accounts=accounts)
 
 @transfer_bp.route('/send', methods=['POST'])
@@ -37,13 +38,13 @@ def send():
         return redirect(url_for('transfer.index'))
 
     # Get from account
-    from_account = Account.query.get(from_account_id)
+    from_account = db.session.get(Account, from_account_id)
     if not from_account or from_account.user_id != session['user_id']:
         flash('Unauthorized', 'danger')
         return redirect(url_for('transfer.index'))
 
     # Get to account
-    to_account = Account.query.filter_by(account_number=to_account_number).first()
+    to_account = db.session.scalar(select(Account).filter_by(account_number=to_account_number))
     if not to_account:
         flash('Recipient account not found', 'danger')
         return redirect(url_for('transfer.index'))
@@ -82,7 +83,7 @@ def get_accounts():
     if check:
         return jsonify([])
 
-    accounts = Account.query.filter_by(user_id=session['user_id']).all()
+    accounts = db.session.scalars(select(Account).filter_by(user_id=session['user_id'])).all()
     return jsonify([{
         'id': acc.id,
         'account_number': acc.account_number,

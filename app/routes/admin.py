@@ -1,6 +1,7 @@
 from flask import Blueprint, render_template, request, session, redirect, url_for, flash, jsonify
 from app.database import db
 from app.models import User, Account, Transaction, Message
+from sqlalchemy import select
 
 admin_bp = Blueprint('admin', __name__, url_prefix='/admin')
 
@@ -26,10 +27,10 @@ def dashboard():
     if not check_admin():
         return "Access Denied", 403
 
-    users = User.query.all()
-    accounts = Account.query.all()
-    transactions = Transaction.query.all()
-    messages = Message.query.all()
+    users = db.session.scalars(select(User)).all()
+    accounts = db.session.scalars(select(Account)).all()
+    transactions = db.session.scalars(select(Transaction)).all()
+    messages = db.session.scalars(select(Message)).all()
 
     return render_template('admin_dashboard.html',
                          users=users,
@@ -46,7 +47,7 @@ def users():
     if not check_admin():
         return "Access Denied", 403
 
-    users = User.query.all()
+    users = db.session.scalars(select(User)).all()
     return render_template('admin_users.html', users=users)
 
 @admin_bp.route('/users/<int:user_id>/edit', methods=['POST'])
@@ -59,7 +60,7 @@ def edit_user(user_id):
     if not check_admin():
         return jsonify({'error': 'Unauthorized'}), 403
 
-    user = User.query.get(user_id)
+    user = db.session.get(User, user_id)
     if not user:
         return jsonify({'error': 'User not found'}), 404
 
@@ -78,7 +79,7 @@ def view_messages():
     if not check_admin():
         return "Access Denied", 403
 
-    messages = Message.query.all()
+    messages = db.session.scalars(select(Message)).all()
     return render_template('admin_messages.html', messages=messages)
 
 @admin_bp.route('/check-url', methods=['POST'])

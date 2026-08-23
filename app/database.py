@@ -5,15 +5,21 @@ db = SQLAlchemy()
 def init_db(app):
     db.init_app(app)
     with app.app_context():
-        db.create_all()
-        seed_database()
+        db.create_all()  # Create tables first
+        seed_database()  # Then seed data
 
 def seed_database():
     """Seed database with demo users and accounts"""
     from app.models import User, Account, Transaction
+    from sqlalchemy import select
 
-    if User.query.first():
-        return  # Database already seeded
+    # Check if database is already seeded
+    try:
+        user_count = db.session.scalar(select(User).limit(1))
+        if user_count:
+            return  # Database already seeded
+    except Exception:
+        pass  # Table doesn't exist, proceed with seeding
 
     # Demo users
     user1 = User(username='alice', email='alice@muradbank.local', full_name='Alice Johnson')

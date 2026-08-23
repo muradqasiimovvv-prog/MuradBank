@@ -1,12 +1,18 @@
 from flask import Blueprint, render_template, request, redirect, url_for, session, flash
 from app.database import db
 from app.models import User
+from sqlalchemy import select
 
 auth_bp = Blueprint('auth', __name__, url_prefix='/')
 
 @auth_bp.route('/')
-@auth_bp.route('/index')
 def index():
+    if 'user_id' in session:
+        return redirect(url_for('dashboard.index'))
+    return render_template('landing.html')
+
+@auth_bp.route('/index')
+def index_old():
     return redirect(url_for('auth.login'))
 
 @auth_bp.route('/login', methods=['GET', 'POST'])
@@ -16,7 +22,7 @@ def login():
         password = request.form.get('password')
 
         # VULNERABLE: No rate limiting, brute force possible
-        user = User.query.filter_by(username=username).first()
+        user = db.session.scalar(select(User).filter_by(username=username))
 
         if user and user.check_password(password):
             session['user_id'] = user.id
@@ -36,11 +42,11 @@ def register():
         password = request.form.get('password')
         full_name = request.form.get('full_name')
 
-        if User.query.filter_by(username=username).first():
+        if db.session.scalar(select(User).filter_by(username=username)):
             flash('Username already exists', 'danger')
             return redirect(url_for('auth.register'))
 
-        if User.query.filter_by(email=email).first():
+        if db.session.scalar(select(User).filter_by(email=email)):
             flash('Email already exists', 'danger')
             return redirect(url_for('auth.register'))
 

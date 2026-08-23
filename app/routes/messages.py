@@ -1,6 +1,7 @@
 from flask import Blueprint, render_template, request, session, redirect, url_for, flash
 from app.database import db
 from app.models import Message
+from sqlalchemy import select
 
 messages_bp = Blueprint('messages', __name__, url_prefix='/messages')
 
@@ -15,7 +16,7 @@ def index():
     if check:
         return check
 
-    messages = Message.query.filter_by(user_id=session['user_id']).all()
+    messages = db.session.scalars(select(Message).filter_by(user_id=session['user_id'])).all()
     return render_template('messages.html', messages=messages)
 
 @messages_bp.route('/new', methods=['GET', 'POST'])
@@ -52,7 +53,7 @@ def view_message(message_id):
     if check:
         return check
 
-    message = Message.query.get(message_id)
+    message = db.session.get(Message, message_id)
 
     if not message or (message.user_id != session['user_id'] and not session.get('is_admin')):
         return "Message not found", 404

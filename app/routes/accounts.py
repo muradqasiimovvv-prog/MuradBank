@@ -26,11 +26,10 @@ def view_account(account_id):
     if check:
         return check
 
-    # VULNERABLE: No authorization check!
-    # Can access any account by changing account_id
+    # FIXED (PT-01): enforce ownership before returning any account data
     account = db.session.get(Account, account_id)
 
-    if not account:
+    if not account or account.user_id != session['user_id']:
         return "Account not found", 404
 
     transactions = db.session.scalars(select(Transaction).filter(

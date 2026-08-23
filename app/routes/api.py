@@ -45,10 +45,10 @@ def get_account_info(account_id):
     if 'user_id' not in session:
         return jsonify({'error': 'Unauthorized'}), 401
 
-    # VULNERABLE: No authorization check!
+    # FIXED (PT-01): enforce ownership before returning any account data
     account = db.session.get(Account, account_id)
 
-    if not account:
+    if not account or account.user_id != session['user_id']:
         return jsonify({'error': 'Account not found'}), 404
 
     return jsonify({

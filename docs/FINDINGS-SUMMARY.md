@@ -9,13 +9,13 @@ Tracks every intentionally-planted vulnerability from discovery through remediat
 | PT-01 | IDOR — Unauthorized Account Access | High | CWE-639 | ✅ Fixed | Mentor demo | [PT-01](reports/PT-01-IDOR-Account-Access.md) |
 | PT-02 | SQL Injection — Transaction Search | Critical | CWE-89 | ✅ Fixed | Mentor demo | [PT-02](reports/PT-02-SQL-Injection-Transaction-Search.md) |
 | PT-03 | Stored XSS — Support Messages | High | CWE-79 | 🟡 Found — fix pending | **Murad** (found independently) | [PT-03](reports/PT-03-Stored-XSS-Support-Messages.md) |
-| PT-04 | Broken Authentication — Admin Session Trust | High | CWE-287 | 🔲 Pending | *your turn* | — |
+| PT-04 | Broken Authentication — Session Forgery | Critical | CWE-287 | 🟡 Found — fix pending | **Murad** (found independently) | [PT-04](reports/PT-04-Broken-Authentication-Session-Forgery.md) |
 | PT-05 | CSRF — Money Transfer | Medium | CWE-352 | 🔲 Pending | *your turn* | — |
 | PT-06 | Unrestricted File Upload — Avatar | High | CWE-434 | 🔲 Pending | *your turn* | — |
 | PT-07 | SSRF — Admin URL Check | Medium | CWE-918 | 🔲 Pending | *your turn* | — |
 | PT-08 | Business Logic Flaw — Transfer Validation | Medium | CWE-840 | 🔲 Pending | *your turn* | — |
 
-**Progress: 2 / 8 closed, 1 / 8 found (fix pending)**
+**Progress: 2 / 8 closed, 2 / 8 found (fix pending)**
 
 ---
 

@@ -87,7 +87,7 @@ Full findings register with status, before/after fixes, and methodology: **[docs
 | PT-01 | Broken Access Control (IDOR) | High | CWE-639 | A01 | ✅ Fixed — [report](docs/reports/PT-01-IDOR-Account-Access.md) |
 | PT-02 | SQL Injection | Critical | CWE-89 | A03 | ✅ Fixed — [report](docs/reports/PT-02-SQL-Injection-Transaction-Search.md) |
 | PT-03 | Stored XSS | High | CWE-79 | A03 | 🟡 Found — [report](docs/reports/PT-03-Stored-XSS-Support-Messages.md) |
-| PT-04 | Broken Authentication | High | CWE-287 | A07 | 🔲 Open |
+| PT-04 | Broken Authentication | Critical | CWE-287 | A07 | 🟡 Found — [report](docs/reports/PT-04-Broken-Authentication-Session-Forgery.md) |
 | PT-05 | CSRF (Cross-Site Request Forgery) | Medium | CWE-352 | A01 | 🔲 Open |
 | PT-06 | Unsafe File Upload | High | CWE-434 | A04 | 🔲 Open |
 | PT-07 | SSRF (Server-Side Request Forgery) | Medium | CWE-918 | A10 | 🔲 Open |

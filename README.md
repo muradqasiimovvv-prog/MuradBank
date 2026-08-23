@@ -80,16 +80,20 @@ python run.py
 
 ## 🔓 Intentional Vulnerabilities
 
-| # | Vulnerability | Severity | CWE | OWASP | Endpoint |
+Full findings register with status, before/after fixes, and methodology: **[docs/FINDINGS-SUMMARY.md](docs/FINDINGS-SUMMARY.md)**
+
+| ID | Vulnerability | Severity | CWE | OWASP | Status |
 |---|---|---|---|---|---|
-| 1 | Broken Access Control (IDOR) | High | CWE-639 | A01 | `/accounts/<account_id>` |
-| 2 | SQL Injection | High | CWE-89 | A03 | `/api/search-transactions` |
-| 3 | Broken Authentication | High | CWE-287 | A07 | `/admin`, Session Management |
-| 4 | Stored XSS | High | CWE-79 | A03 | `/messages` |
-| 5 | CSRF (Cross-Site Request Forgery) | Medium | CWE-352 | A01 | `/transfer/send` |
-| 6 | Unsafe File Upload | High | CWE-434 | A04 | `/profile/edit` |
-| 7 | SSRF (Server-Side Request Forgery) | Medium | CWE-918 | A10 | `/admin/check-url` |
-| 8 | Business Logic Flaw | Medium | CWE-840 | A04 | `/transfer/send` |
+| PT-01 | Broken Access Control (IDOR) | High | CWE-639 | A01 | ✅ Fixed — [report](docs/reports/PT-01-IDOR-Account-Access.md) |
+| PT-02 | SQL Injection | Critical | CWE-89 | A03 | ✅ Fixed — [report](docs/reports/PT-02-SQL-Injection-Transaction-Search.md) |
+| PT-03 | Stored XSS | High | CWE-79 | A03 | 🔲 Open |
+| PT-04 | Broken Authentication | High | CWE-287 | A07 | 🔲 Open |
+| PT-05 | CSRF (Cross-Site Request Forgery) | Medium | CWE-352 | A01 | 🔲 Open |
+| PT-06 | Unsafe File Upload | High | CWE-434 | A04 | 🔲 Open |
+| PT-07 | SSRF (Server-Side Request Forgery) | Medium | CWE-918 | A10 | 🔲 Open |
+| PT-08 | Business Logic Flaw | Medium | CWE-840 | A04 | 🔲 Open |
+
+> Endpoints and exploitation details for open findings are intentionally not published here — this is a hands-on pentest exercise. See `docs/reports/` for the two closed findings' full write-ups (including endpoint, PoC, and fix) once you're ready to compare notes.
 
 ## 📁 Project Structure
 
@@ -103,12 +107,12 @@ muradbank/
 │   ├── routes/              (Route handlers)
 │   │   ├── auth.py          (Login/Register)
 │   │   ├── dashboard.py     (Main page)
-│   │   ├── accounts.py      (IDOR vulnerability)
-│   │   ├── transfer.py      (CSRF vulnerability)
-│   │   ├── messages.py      (Stored XSS)
-│   │   ├── profile.py       (File upload)
-│   │   ├── admin.py         (Broken auth & SSRF)
-│   │   └── api.py           (SQL injection)
+│   │   ├── accounts.py      (Account views — PT-01 fixed here)
+│   │   ├── transfer.py      (Money transfer)
+│   │   ├── messages.py      (Support messages)
+│   │   ├── profile.py       (Profile & avatar upload)
+│   │   ├── admin.py         (Admin panel)
+│   │   └── api.py           (JSON API — PT-01 & PT-02 fixed here)
 │   ├── templates/           (HTML templates)
 │   └── static/
 │       ├── css/style.css    (Styling)
@@ -149,47 +153,9 @@ muradbank/
 - ✅ System logs
 - ✅ URL check utility
 
-## 🔐 Known Vulnerabilities (Intentional)
+## 🔐 Vulnerability Status
 
-### IDOR (Insecure Direct Object Reference)
-- **Location**: `/accounts/<account_id>`
-- **Impact**: Access other users' account details
-- **How to test**: Change account_id to access other accounts
-
-### SQL Injection
-- **Location**: `/api/search-transactions`
-- **Impact**: Database data extraction
-- **How to test**: Inject SQL in search parameter
-
-### Stored XSS
-- **Location**: `/messages` (support messages)
-- **Impact**: Execute JavaScript in admin panel
-- **How to test**: Send message with `<script>alert('XSS')</script>`
-
-### Broken Authentication
-- **Location**: `/admin`
-- **Impact**: Admin privileges can be added via session manipulation
-- **How to test**: Modify session `is_admin` value
-
-### CSRF
-- **Location**: `/transfer/send`
-- **Impact**: Unauthorized money transfer
-- **How to test**: No CSRF token validation
-
-### Unsafe File Upload
-- **Location**: `/profile/edit` (avatar upload)
-- **Impact**: Upload malicious files
-- **How to test**: Upload .php, .exe, or malicious scripts
-
-### SSRF
-- **Location**: `/admin/check-url`
-- **Impact**: Access internal services
-- **How to test**: Input `http://localhost:5000/admin` or `http://169.254.169.254`
-
-### Business Logic Flaw
-- **Location**: `/transfer/send`
-- **Impact**: Manipulate transaction amounts
-- **How to test**: Send negative amounts or bypass validation
+2 of 8 intentional vulnerabilities have been found, exploited, documented, and fixed as worked examples — see [docs/FINDINGS-SUMMARY.md](docs/FINDINGS-SUMMARY.md) for the full before/after and methodology. The remaining 6 are open, to be discovered through hands-on testing (Burp Suite, curl, browser DevTools) rather than read off this page.
 
 ## 🧪 Testing Methodology
 

@@ -90,7 +90,7 @@ Full findings register with status, before/after fixes, and methodology: **[docs
 | PT-04 | Broken Authentication | Critical | CWE-287 | A07 | 🟡 Found — [report](docs/reports/PT-04-Broken-Authentication-Session-Forgery.md) |
 | PT-05 | CSRF (Cross-Site Request Forgery) | High | CWE-352 | A01 | 🟡 Found — [report](docs/reports/PT-05-CSRF-Money-Transfer.md) |
 | PT-06 | Unsafe File Upload | High | CWE-434 | A04 | 🟡 Found — [report](docs/reports/PT-06-Unrestricted-File-Upload.md) |
-| PT-07 | SSRF (Server-Side Request Forgery) | Medium | CWE-918 | A10 | 🔲 Open |
+| PT-07 | SSRF (Server-Side Request Forgery) | Medium | CWE-918 | A10 | 🟡 Found — [report](docs/reports/PT-07-SSRF-Admin-URL-Check.md) |
 | PT-08 | Business Logic Flaw | Medium | CWE-840 | A04 | 🔲 Open |
 
 > Endpoints and exploitation details for open findings are intentionally not published here — this is a hands-on pentest exercise. See `docs/reports/` for the two closed findings' full write-ups (including endpoint, PoC, and fix) once you're ready to compare notes.

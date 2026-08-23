@@ -11,11 +11,11 @@ Tracks every intentionally-planted vulnerability from discovery through remediat
 | PT-03 | Stored XSS — Support Messages | High | CWE-79 | 🟡 Found — fix pending | **Murad** (found independently) | [PT-03](reports/PT-03-Stored-XSS-Support-Messages.md) |
 | PT-04 | Broken Authentication — Session Forgery | Critical | CWE-287 | 🟡 Found — fix pending | **Murad** (found independently) | [PT-04](reports/PT-04-Broken-Authentication-Session-Forgery.md) |
 | PT-05 | CSRF — Money Transfer | High | CWE-352 | 🟡 Found — fix pending | **Murad** (found independently) | [PT-05](reports/PT-05-CSRF-Money-Transfer.md) |
-| PT-06 | Unrestricted File Upload — Avatar | High | CWE-434 | 🔲 Pending | *your turn* | — |
+| PT-06 | Unrestricted File Upload — Avatar | High | CWE-434 | 🟡 Found — fix pending | **Murad** (found independently) | [PT-06](reports/PT-06-Unrestricted-File-Upload.md) |
 | PT-07 | SSRF — Admin URL Check | Medium | CWE-918 | 🔲 Pending | *your turn* | — |
 | PT-08 | Business Logic Flaw — Transfer Validation | Medium | CWE-840 | 🔲 Pending | *your turn* | — |
 
-**Progress: 2 / 8 closed, 3 / 8 found (fix pending)**
+**Progress: 2 / 8 closed, 4 / 8 found (fix pending)**
 
 ---
 

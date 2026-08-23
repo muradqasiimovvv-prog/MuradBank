@@ -89,7 +89,7 @@ Full findings register with status, before/after fixes, and methodology: **[docs
 | PT-03 | Stored XSS | High | CWE-79 | A03 | 🟡 Found — [report](docs/reports/PT-03-Stored-XSS-Support-Messages.md) |
 | PT-04 | Broken Authentication | Critical | CWE-287 | A07 | 🟡 Found — [report](docs/reports/PT-04-Broken-Authentication-Session-Forgery.md) |
 | PT-05 | CSRF (Cross-Site Request Forgery) | High | CWE-352 | A01 | 🟡 Found — [report](docs/reports/PT-05-CSRF-Money-Transfer.md) |
-| PT-06 | Unsafe File Upload | High | CWE-434 | A04 | 🔲 Open |
+| PT-06 | Unsafe File Upload | High | CWE-434 | A04 | 🟡 Found — [report](docs/reports/PT-06-Unrestricted-File-Upload.md) |
 | PT-07 | SSRF (Server-Side Request Forgery) | Medium | CWE-918 | A10 | 🔲 Open |
 | PT-08 | Business Logic Flaw | Medium | CWE-840 | A04 | 🔲 Open |
 

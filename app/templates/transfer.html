@@ -15,7 +15,6 @@
             </div>
             <div class="card-body">
                 <form method="POST" action="{{ url_for('transfer.send') }}" class="form">
-                    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
                     <div class="form-group">
                         <label for="from_account_id">Hansı Hesabdan</label>
                         <select name="from_account_id" id="from_account_id" required>

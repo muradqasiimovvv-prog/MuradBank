@@ -30,9 +30,9 @@
             <td>{{ msg.created_at.strftime('%Y-%m-%d %H:%M') }}</td>
             <td><span class="badge badge-{{ msg.status }}">{{ msg.status }}</span></td>
             <td>
-                <!-- FIXED (PT-03): Jinja2 auto-escapes by default now that |safe is removed -->
+                <!-- VULNERABLE: Content rendered without escaping -->
                 <div style="max-width: 300px; overflow: hidden;">
-                    {{ msg.content }}
+                    {{ msg.content|safe }}
                 </div>
             </td>
         </tr>

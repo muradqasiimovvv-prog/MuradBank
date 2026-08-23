@@ -1,7 +1,3 @@
-import ipaddress
-import socket
-from urllib.parse import urlparse
-
 from flask import Blueprint, render_template, request, session, redirect, url_for, flash, jsonify
 from app.database import db
 from app.models import User, Account, Transaction, Message
@@ -15,34 +11,11 @@ def check_login():
     return None
 
 def check_admin():
-    """FIXED (PT-04): re-verify privilege from the database, never trust the
-    client-supplied session claim alone — a forged/stale session cookie
-    asserting is_admin=True is now worthless without a matching DB row."""
+    """VULNERABLE: Simple check that can be bypassed"""
     if 'user_id' not in session:
         return False
-    user = db.session.get(User, session['user_id'])
-    return user is not None and user.is_admin
-
-# FIXED (PT-07): block requests to internal/non-routable address ranges
-_SSRF_BLOCKED_NETWORKS = [
-    ipaddress.ip_network('127.0.0.0/8'),
-    ipaddress.ip_network('10.0.0.0/8'),
-    ipaddress.ip_network('172.16.0.0/12'),
-    ipaddress.ip_network('192.168.0.0/16'),
-    ipaddress.ip_network('169.254.0.0/16'),   # link-local / cloud metadata
-    ipaddress.ip_network('::1/128'),
-    ipaddress.ip_network('fc00::/7'),
-]
-
-def is_safe_url(url):
-    parsed = urlparse(url)
-    if parsed.scheme not in ('http', 'https') or not parsed.hostname:
-        return False
-    try:
-        resolved_ip = ipaddress.ip_address(socket.gethostbyname(parsed.hostname))
-    except (socket.gaierror, ValueError):
-        return False
-    return not any(resolved_ip in net for net in _SSRF_BLOCKED_NETWORKS)
+    # VULNERABLE: Checking session['is_admin'] which is user-controlled!
+    return session.get('is_admin', False)
 
 @admin_bp.route('/')
 def dashboard():
@@ -111,6 +84,7 @@ def view_messages():
 
 @admin_bp.route('/check-url', methods=['POST'])
 def check_url():
+    """VULNERABLE: SSRF endpoint"""
     check = check_login()
     if check:
         return check
@@ -118,19 +92,15 @@ def check_url():
     if not check_admin():
         return jsonify({'error': 'Unauthorized'}), 403
 
-    url = request.form.get('url', '')
+    url = request.form.get('url')
 
-    # FIXED (PT-07): reject internal/link-local/loopback targets before connecting,
-    # and disable redirects so an allowed URL can't 302 into a blocked one.
-    if not is_safe_url(url):
-        return jsonify({'error': 'URL not allowed'}), 400
-
+    # VULNERABLE: No URL validation, can access internal services
     try:
         import requests
-        response = requests.get(url, timeout=5, allow_redirects=False)
+        response = requests.get(url, timeout=5)
         return jsonify({
             'status_code': response.status_code,
             'content': response.text[:500]
         })
-    except Exception:
-        return jsonify({'error': 'Request failed'}), 502
+    except Exception as e:
+        return jsonify({'error': str(e)})

@@ -8,14 +8,14 @@ Tracks every intentionally-planted vulnerability from discovery through remediat
 |----|---------------|----------|-----|--------|-------------------|--------|
 | PT-01 | IDOR — Unauthorized Account Access | High | CWE-639 | ✅ Fixed | Mentor demo | [PT-01](reports/PT-01-IDOR-Account-Access.md) |
 | PT-02 | SQL Injection — Transaction Search | Critical | CWE-89 | ✅ Fixed | Mentor demo | [PT-02](reports/PT-02-SQL-Injection-Transaction-Search.md) |
-| PT-03 | Stored XSS — Support Messages | High | CWE-79 | ✅ Fixed | **Murad** (found independently) | [PT-03](reports/PT-03-Stored-XSS-Support-Messages.md) |
-| PT-04 | Broken Authentication — Session Forgery | Critical | CWE-287 | ✅ Fixed | **Murad** (found independently) | [PT-04](reports/PT-04-Broken-Authentication-Session-Forgery.md) |
-| PT-05 | CSRF — Money Transfer | High | CWE-352 | ✅ Fixed | **Murad** (found independently) | [PT-05](reports/PT-05-CSRF-Money-Transfer.md) |
-| PT-06 | Unrestricted File Upload — Avatar | High | CWE-434 | ✅ Fixed | **Murad** (found independently) | [PT-06](reports/PT-06-Unrestricted-File-Upload.md) |
-| PT-07 | SSRF — Admin URL Check | Medium | CWE-918 | ✅ Fixed | **Murad** (found independently) | [PT-07](reports/PT-07-SSRF-Admin-URL-Check.md) |
-| PT-08 | Business Logic Flaw — Amount Validation (NaN crash + debug info leak) | Medium | CWE-20 | ✅ Fixed | **Murad** (found independently) | [PT-08](reports/PT-08-Business-Logic-Amount-Validation.md) |
+| PT-03 | Stored XSS — Support Messages | High | CWE-79 | 🟡 Found — fix pending | **Murad** (found independently) | [PT-03](reports/PT-03-Stored-XSS-Support-Messages.md) |
+| PT-04 | Broken Authentication — Session Forgery | Critical | CWE-287 | 🟡 Found — fix pending | **Murad** (found independently) | [PT-04](reports/PT-04-Broken-Authentication-Session-Forgery.md) |
+| PT-05 | CSRF — Money Transfer | High | CWE-352 | 🟡 Found — fix pending | **Murad** (found independently) | [PT-05](reports/PT-05-CSRF-Money-Transfer.md) |
+| PT-06 | Unrestricted File Upload — Avatar | High | CWE-434 | 🟡 Found — fix pending | **Murad** (found independently) | [PT-06](reports/PT-06-Unrestricted-File-Upload.md) |
+| PT-07 | SSRF — Admin URL Check | Medium | CWE-918 | 🟡 Found — fix pending | **Murad** (found independently) | [PT-07](reports/PT-07-SSRF-Admin-URL-Check.md) |
+| PT-08 | Business Logic Flaw — Amount Validation (NaN crash + debug info leak) | Medium | CWE-20 | 🟡 Found — fix pending | **Murad** (found independently) | [PT-08](reports/PT-08-Business-Logic-Amount-Validation.md) |
 
-**Progress: 8 / 8 fixed on this branch. 🎉 This is the `fixed` branch — see `main` for the intentionally-vulnerable version (PT-03 through PT-08 still live there for hands-on practice).**
+**Progress: 2 / 8 closed, 6 / 8 found — all 8 discovered! 🎉**
 
 ---
 

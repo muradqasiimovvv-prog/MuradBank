@@ -86,12 +86,12 @@ Full findings register with status, before/after fixes, and methodology: **[docs
 |---|---|---|---|---|---|
 | PT-01 | Broken Access Control (IDOR) | High | CWE-639 | A01 | ✅ Fixed — [report](docs/reports/PT-01-IDOR-Account-Access.md) |
 | PT-02 | SQL Injection | Critical | CWE-89 | A03 | ✅ Fixed — [report](docs/reports/PT-02-SQL-Injection-Transaction-Search.md) |
-| PT-03 | Stored XSS | High | CWE-79 | A03 | ✅ Fixed — [report](docs/reports/PT-03-Stored-XSS-Support-Messages.md) |
-| PT-04 | Broken Authentication | Critical | CWE-287 | A07 | ✅ Fixed — [report](docs/reports/PT-04-Broken-Authentication-Session-Forgery.md) |
-| PT-05 | CSRF (Cross-Site Request Forgery) | High | CWE-352 | A01 | ✅ Fixed — [report](docs/reports/PT-05-CSRF-Money-Transfer.md) |
-| PT-06 | Unsafe File Upload | High | CWE-434 | A04 | ✅ Fixed — [report](docs/reports/PT-06-Unrestricted-File-Upload.md) |
-| PT-07 | SSRF (Server-Side Request Forgery) | Medium | CWE-918 | A10 | ✅ Fixed — [report](docs/reports/PT-07-SSRF-Admin-URL-Check.md) |
-| PT-08 | Business Logic Flaw (amount validation) | Medium | CWE-20 | A04 | ✅ Fixed — [report](docs/reports/PT-08-Business-Logic-Amount-Validation.md) |
+| PT-03 | Stored XSS | High | CWE-79 | A03 | 🟡 Found — [report](docs/reports/PT-03-Stored-XSS-Support-Messages.md) |
+| PT-04 | Broken Authentication | Critical | CWE-287 | A07 | 🟡 Found — [report](docs/reports/PT-04-Broken-Authentication-Session-Forgery.md) |
+| PT-05 | CSRF (Cross-Site Request Forgery) | High | CWE-352 | A01 | 🟡 Found — [report](docs/reports/PT-05-CSRF-Money-Transfer.md) |
+| PT-06 | Unsafe File Upload | High | CWE-434 | A04 | 🟡 Found — [report](docs/reports/PT-06-Unrestricted-File-Upload.md) |
+| PT-07 | SSRF (Server-Side Request Forgery) | Medium | CWE-918 | A10 | 🟡 Found — [report](docs/reports/PT-07-SSRF-Admin-URL-Check.md) |
+| PT-08 | Business Logic Flaw (amount validation) | Medium | CWE-20 | A04 | 🟡 Found — [report](docs/reports/PT-08-Business-Logic-Amount-Validation.md) |
 
 > Endpoints and exploitation details for open findings are intentionally not published here — this is a hands-on pentest exercise. See `docs/reports/` for the two closed findings' full write-ups (including endpoint, PoC, and fix) once you're ready to compare notes.
 
@@ -155,9 +155,7 @@ muradbank/
 
 ## 🔐 Vulnerability Status
 
-All 8 intentional vulnerabilities have been found, documented, and fixed on this branch — see [docs/FINDINGS-SUMMARY.md](docs/FINDINGS-SUMMARY.md) for full reports, PoCs, and remediation details.
-
-**This is the `fixed` branch.** The `main` branch intentionally keeps PT-03 through PT-08 live and vulnerable (PT-01/PT-02 are fixed there too, as early worked examples) — clone `main` instead if you want to practice finding these issues yourself before checking this branch's fixes.
+All 8 intentional vulnerabilities have been found and documented through hands-on testing (Burp Suite, curl, browser DevTools) — see [docs/FINDINGS-SUMMARY.md](docs/FINDINGS-SUMMARY.md) for full reports, PoCs, and remediation status. 2 have been fixed as worked examples; the remaining 6 are documented and awaiting a final remediation pass.
 
 ## 🧪 Testing Methodology
 

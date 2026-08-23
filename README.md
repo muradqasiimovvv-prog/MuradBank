@@ -249,6 +249,20 @@ How to fix it
 Example of secure code
 ```
 
+## 📸 Screenshots
+
+**Landing page & login:**
+
+![Landing and login page](docs/screenshots/01-landing-login.png)
+
+**User dashboard:**
+
+![Dashboard](docs/screenshots/02-dashboard.png)
+
+**Profile page:**
+
+![Profile page](docs/screenshots/03-profile.png)
+
 ## 🚀 Running the Application
 
 ```bash

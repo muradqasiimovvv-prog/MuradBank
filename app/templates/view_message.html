@@ -17,8 +17,8 @@
         <p><strong>Category:</strong> {{ message.category or 'General' }}</p>
         <hr>
         <div class="message-content">
-            <!-- VULNERABLE: XSS - content is not escaped -->
-            {{ message.content|safe }}
+            <!-- FIXED (PT-03): Jinja2 auto-escapes by default now that |safe is removed -->
+            {{ message.content }}
         </div>
     </div>
 </div>

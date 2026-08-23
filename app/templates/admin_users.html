@@ -39,14 +39,19 @@
 </table>
 
 <script>
+const csrfToken = "{{ csrf_token() }}";
+
 document.querySelectorAll('.admin-toggle').forEach(checkbox => {
     checkbox.addEventListener('change', function() {
         const userId = this.dataset.userId;
         const isAdmin = this.checked;
-        // VULNERABLE: Making admin changes without proper CSRF protection
+        const formData = new FormData();
+        formData.append('is_admin', isAdmin ? 'on' : '');
+        // FIXED (PT-05): send the CSRF token as a header so CSRFProtect accepts this fetch
         fetch('{{ url_for("admin.edit_user", user_id="ID") }}'.replace('ID', userId), {
             method: 'POST',
-            body: new FormData()
+            headers: { 'X-CSRFToken': csrfToken },
+            body: formData
         });
     });
 });

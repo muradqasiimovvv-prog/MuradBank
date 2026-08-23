@@ -11,6 +11,7 @@
 <div class="card max-width-600">
     <div class="card-body">
         <form method="POST" class="form">
+            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
             <div class="form-group">
                 <label for="subject">Subject</label>
                 <input type="text" name="subject" id="subject" required>

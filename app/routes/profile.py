@@ -1,10 +1,28 @@
-from flask import Blueprint, render_template, request, session, redirect, url_for, flash, current_app
+from flask import Blueprint, render_template, request, session, redirect, url_for, flash, current_app, send_from_directory
 from app.database import db
 from app.models import User
 from werkzeug.utils import secure_filename
+from PIL import Image
 import os
 
 profile_bp = Blueprint('profile', __name__, url_prefix='/profile')
+
+def allowed_file(filename):
+    """FIXED (PT-06): enforce the image-only extension allow-list."""
+    return '.' in filename and \
+        filename.rsplit('.', 1)[1].lower() in current_app.config['ALLOWED_EXTENSIONS']
+
+def is_genuine_image(file_stream):
+    """FIXED (PT-06): verify the file is actually a valid image, not just
+    named like one — catches a renamed .html/.php file, defense in depth
+    beyond the extension check."""
+    try:
+        file_stream.seek(0)
+        Image.open(file_stream).verify()
+        file_stream.seek(0)
+        return True
+    except Exception:
+        return False
 
 def check_login():
     if 'user_id' not in session:
@@ -37,12 +55,18 @@ def edit():
             file = request.files['avatar']
 
             if file and file.filename != '':
-                # VULNERABLE: No file type validation!
-                # VULNERABLE: Using filename directly (directory traversal possible)
+                # FIXED (PT-06): extension allow-list + real image-content check
+                if not allowed_file(file.filename):
+                    flash('Invalid file type. Only JPG, PNG, and GIF images are allowed.', 'danger')
+                    return redirect(url_for('profile.edit'))
+
+                if not is_genuine_image(file.stream):
+                    flash('File is not a valid image.', 'danger')
+                    return redirect(url_for('profile.edit'))
+
                 filename = secure_filename(file.filename)
                 upload_path = os.path.join(current_app.config['UPLOAD_FOLDER'], filename)
 
-                # Create upload folder if not exists
                 os.makedirs(current_app.config['UPLOAD_FOLDER'], exist_ok=True)
 
                 file.save(upload_path)
@@ -56,10 +80,7 @@ def edit():
 
 @profile_bp.route('/uploads/<filename>')
 def get_upload(filename):
-    """Serve uploaded files"""
-    # VULNERABLE: Can read any file from uploads folder
-    upload_path = os.path.join(current_app.config['UPLOAD_FOLDER'], filename)
-    if os.path.exists(upload_path):
-        with open(upload_path, 'rb') as f:
-            return f.read()
-    return "File not found", 404
+    # FIXED (PT-06): send_from_directory safely resolves the path within
+    # UPLOAD_FOLDER and rejects traversal attempts, instead of manually
+    # joining an unsanitized filename onto the filesystem path.
+    return send_from_directory(current_app.config['UPLOAD_FOLDER'], filename)

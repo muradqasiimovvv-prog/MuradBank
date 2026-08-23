@@ -7,37 +7,30 @@ api_bp = Blueprint('api', __name__, url_prefix='/api')
 
 @api_bp.route('/search-transactions', methods=['POST'])
 def search_transactions():
-    """VULNERABLE: SQL Injection"""
     if 'user_id' not in session:
         return jsonify({'error': 'Unauthorized'}), 401
 
     search_term = request.form.get('q', '')
 
-    # VULNERABLE: Raw SQL with user input!
-    # No parameterized queries, direct concatenation
-    query = f"""
-        SELECT * FROM transactions
-        WHERE user_id = {session['user_id']}
-        AND description LIKE '%{search_term}%'
-    """
+    # FIXED (PT-02): use the ORM query builder instead of raw SQL so all
+    # values are automatically parameterized — eliminates SQL injection
+    # regardless of what the user submits in `search_term`.
+    transactions = db.session.scalars(
+        select(Transaction)
+        .filter(Transaction.user_id == session['user_id'])
+        .filter(Transaction.description.ilike(f'%{search_term}%'))
+    ).all()
 
-    try:
-        result = db.session.execute(query)
-        rows = result.fetchall()
-
-        transactions = []
-        for row in rows:
-            transactions.append({
-                'id': row[0],
-                'from_account_id': row[1],
-                'to_account_id': row[2],
-                'amount': row[4],
-                'description': row[5]
-            })
-
-        return jsonify({'transactions': transactions})
-    except Exception as e:
-        return jsonify({'error': str(e)}), 500
+    return jsonify({'transactions': [
+        {
+            'id': t.id,
+            'from_account_id': t.from_account_id,
+            'to_account_id': t.to_account_id,
+            'amount': t.amount,
+            'description': t.description
+        }
+        for t in transactions
+    ]})
 
 @api_bp.route('/account-info/<account_id>', methods=['GET'])
 def get_account_info(account_id):

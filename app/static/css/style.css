@@ -432,9 +432,37 @@ body {
     color: var(--dark);
 }
 
+.dashboard-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 2px solid #F0F0F0;
+}
+
+.dashboard-header h1 {
+    font-size: 32px;
+    margin: 0;
+}
+
+.header-subtitle {
+    color: var(--gray);
+    font-size: 14px;
+    margin: 0.5rem 0 0 0;
+}
+
+.dashboard-date {
+    background: #FFF3E0;
+    padding: 10px 20px;
+    border-radius: 20px;
+    font-size: 14px;
+    font-weight: 600;
+}
+
 .dashboard-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
     gap: 1.5rem;
     margin-bottom: 2rem;
 }
@@ -466,6 +494,22 @@ body {
     border-top: 1px solid #EEE;
 }
 
+.card-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+.card-top h3 {
+    margin: 0;
+    font-size: 14px;
+}
+
+.card-top .icon {
+    font-size: 24px;
+}
+
 .total-balance {
     background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
     color: white;
@@ -477,26 +521,35 @@ body {
 }
 
 .balance {
-    font-size: 28px;
+    font-size: 32px;
     font-weight: bold;
+    margin-bottom: 0.5rem;
 }
 
 .accounts-count,
-.transactions-count {
+.transactions-count,
+.bonus-card {
     background: white;
     border-left: 4px solid var(--primary);
 }
 
 .accounts-count h3,
-.transactions-count h3 {
+.transactions-count h3,
+.bonus-card h3 {
     color: var(--primary);
     margin-bottom: 0.5rem;
 }
 
 .count {
-    font-size: 24px;
+    font-size: 28px;
     font-weight: bold;
     color: var(--dark);
+    margin-bottom: 0.5rem;
+}
+
+.card small {
+    color: var(--gray);
+    font-size: 12px;
 }
 
 /* Tables */
@@ -605,9 +658,9 @@ body {
 .dashboard-section {
     background: white;
     padding: 2rem;
-    border-radius: 8px;
+    border-radius: 12px;
     margin-bottom: 2rem;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
 }
 
 .dashboard-section h2 {
@@ -615,6 +668,164 @@ body {
     color: var(--dark);
     border-bottom: 2px solid var(--primary);
     padding-bottom: 0.5rem;
+}
+
+.section-header-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+}
+
+.section-header-top h2 {
+    margin: 0;
+    border: none;
+    padding: 0;
+}
+
+/* Quick Actions */
+.quick-actions {
+    background: linear-gradient(135deg, #F8F9FA 0%, #FFF8F0 100%);
+}
+
+.actions-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    gap: 1rem;
+}
+
+.action-btn {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    padding: 1.5rem;
+    background: white;
+    border: 2px solid #F0F0F0;
+    border-radius: 12px;
+    text-decoration: none;
+    color: var(--dark);
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+
+.action-btn:hover {
+    border-color: var(--primary);
+    box-shadow: 0 4px 12px rgba(255, 87, 34, 0.15);
+    transform: translateY(-4px);
+}
+
+.action-btn .icon {
+    font-size: 32px;
+}
+
+/* Transactions List */
+.transactions-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.transaction-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem;
+    background: #F8F9FA;
+    border-radius: 8px;
+    border-left: 4px solid var(--primary);
+    transition: all 0.3s ease;
+}
+
+.transaction-item:hover {
+    background: #F0F0F0;
+}
+
+.trans-left {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    flex: 1;
+}
+
+.trans-icon {
+    font-size: 24px;
+    width: 48px;
+    height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: white;
+    border-radius: 8px;
+}
+
+.trans-info {
+    flex: 1;
+}
+
+.trans-desc {
+    margin: 0;
+    font-weight: 600;
+    color: var(--dark);
+}
+
+.trans-time {
+    color: var(--gray);
+    font-size: 12px;
+}
+
+.trans-right {
+    text-align: right;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.trans-amount {
+    font-weight: bold;
+    font-size: 16px;
+    color: var(--danger);
+    margin: 0;
+}
+
+.empty-state {
+    text-align: center;
+    padding: 2rem;
+    color: var(--gray);
+}
+
+/* Security Banner */
+.security-banner {
+    background: linear-gradient(135deg, #D4EDDA 0%, #C3E6CB 100%);
+    border-left: 4px solid #27AE60;
+    padding: 1.5rem;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 2rem;
+}
+
+.security-banner span {
+    font-size: 32px;
+}
+
+.security-banner strong {
+    color: #155724;
+    display: block;
+    margin-bottom: 0.25rem;
+}
+
+.security-banner p {
+    color: #155724;
+    font-size: 13px;
+    margin: 0;
+}
+
+.balance-cell {
+    font-weight: 600;
+    color: var(--primary);
 }
 
 /* Accounts */

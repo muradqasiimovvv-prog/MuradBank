@@ -1,41 +1,245 @@
 {% extends "base.html" %}
 
-{% block title %}Profile - MuradBank{% endblock %}
+{% block title %}Profil - MuradBank{% endblock %}
 
 {% block content %}
 <div class="page-header">
-    <h1>My Profile</h1>
-    <a href="{{ url_for('profile.edit') }}" class="btn btn-primary">Edit Profile</a>
+    <h1>👤 Sizin Profil</h1>
+    <a href="{{ url_for('profile.edit') }}" class="btn btn-primary">Redaktə Et</a>
 </div>
 
-<div class="card max-width-500">
-    <div class="card-body">
-        <div class="profile-avatar">
-            <img src="{{ url_for('static', filename='uploads/' + user.avatar) }}" alt="Avatar" class="avatar">
+<div class="profile-container">
+    <div class="profile-card">
+        <div class="profile-header">
+            <div class="profile-avatar-section">
+                <div class="profile-avatar">
+                    <span>👤</span>
+                </div>
+            </div>
+            <div class="profile-info">
+                <h2>{{ user.full_name }}</h2>
+                <p class="username">@{{ user.username }}</p>
+                <p class="member-since">Üzv: {{ user.created_at.strftime('%d.%m.%Y') }} tarixindən</p>
+            </div>
         </div>
 
-        <table class="detail-table">
-            <tr>
-                <td><strong>Username:</strong></td>
-                <td>{{ user.username }}</td>
-            </tr>
-            <tr>
-                <td><strong>Full Name:</strong></td>
-                <td>{{ user.full_name }}</td>
-            </tr>
-            <tr>
-                <td><strong>Email:</strong></td>
-                <td>{{ user.email }}</td>
-            </tr>
-            <tr>
-                <td><strong>Phone:</strong></td>
-                <td>{{ user.phone or 'Not set' }}</td>
-            </tr>
-            <tr>
-                <td><strong>Account Created:</strong></td>
-                <td>{{ user.created_at.strftime('%Y-%m-%d') }}</td>
-            </tr>
-        </table>
+        <div class="profile-stats">
+            <div class="stat">
+                <h4>Kateqoriya</h4>
+                <p>💎 Premium Üzv</p>
+            </div>
+            <div class="stat">
+                <h4>Bonus Balans</h4>
+                <p>🎁 250 AZN</p>
+            </div>
+            <div class="stat">
+                <h4>Hesab Vəziyyəti</h4>
+                <p>✅ Təsdiq edilib</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="profile-details">
+        <div class="card">
+            <div class="card-header">
+                <h3>Şəxsi Məlumatlar</h3>
+            </div>
+            <div class="card-body">
+                <div class="detail-item">
+                    <span class="detail-label">📧 E-poçt</span>
+                    <span class="detail-value">{{ user.email }}</span>
+                </div>
+                <div class="detail-item">
+                    <span class="detail-label">📱 Telefon</span>
+                    <span class="detail-value">{{ user.phone or '❌ Təyin edilməmiş' }}</span>
+                </div>
+                <div class="detail-item">
+                    <span class="detail-label">👤 İstifadəçi Adı</span>
+                    <span class="detail-value">{{ user.username }}</span>
+                </div>
+                <div class="detail-item">
+                    <span class="detail-label">📅 Qeydiyyat Tarixi</span>
+                    <span class="detail-value">{{ user.created_at.strftime('%d.%m.%Y') }}</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header">
+                <h3>Güvənlik</h3>
+            </div>
+            <div class="card-body">
+                <div class="security-item">
+                    <span>🔒 Şifrə</span>
+                    <a href="#" class="btn btn-small">Dəyiş</a>
+                </div>
+                <div class="security-item">
+                    <span>📱 Iki-Faktor Auth</span>
+                    <a href="#" class="btn btn-small">Aktivləşdir</a>
+                </div>
+                <div class="security-item">
+                    <span>📍 Aktiv Cihazlar</span>
+                    <a href="#" class="btn btn-small">Bax</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header">
+                <h3>Bildirişlər</h3>
+            </div>
+            <div class="card-body">
+                <div class="notification-item">
+                    <input type="checkbox" checked>
+                    <label>Transfer bildirişləri</label>
+                </div>
+                <div class="notification-item">
+                    <input type="checkbox" checked>
+                    <label>Promosyon mesajları</label>
+                </div>
+                <div class="notification-item">
+                    <input type="checkbox" checked>
+                    <label>Hesab aktivitəsi</label>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
+
+<style>
+.profile-container {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: 2rem;
+    margin-top: 2rem;
+}
+
+.profile-card {
+    background: white;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+}
+
+.profile-header {
+    background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+    color: white;
+    padding: 2rem;
+    text-align: center;
+}
+
+.profile-avatar-section {
+    margin-bottom: 1rem;
+}
+
+.profile-avatar {
+    width: 80px;
+    height: 80px;
+    margin: 0 auto;
+    background: rgba(255,255,255,0.2);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 36px;
+}
+
+.profile-header h2 {
+    margin: 1rem 0 0.5rem;
+    font-size: 24px;
+}
+
+.username {
+    color: rgba(255,255,255,0.8);
+    margin: 0.25rem 0;
+}
+
+.member-since {
+    font-size: 12px;
+    color: rgba(255,255,255,0.7);
+    margin: 0.5rem 0 0;
+}
+
+.profile-stats {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0;
+    border-top: 1px solid #F0F0F0;
+}
+
+.stat {
+    padding: 1rem;
+    text-align: center;
+    border-right: 1px solid #F0F0F0;
+}
+
+.stat:last-child {
+    border-right: none;
+}
+
+.stat h4 {
+    font-size: 12px;
+    color: #999;
+    margin: 0 0 0.5rem;
+    text-transform: uppercase;
+}
+
+.stat p {
+    margin: 0;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.profile-details {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.detail-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem;
+    border-bottom: 1px solid #F0F0F0;
+}
+
+.detail-item:last-child {
+    border-bottom: none;
+}
+
+.detail-label {
+    font-weight: 600;
+    color: var(--dark);
+}
+
+.detail-value {
+    color: var(--gray);
+    font-size: 14px;
+}
+
+.security-item, .notification-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem;
+    border-bottom: 1px solid #F0F0F0;
+}
+
+.security-item:last-child, .notification-item:last-child {
+    border-bottom: none;
+}
+
+.notification-item input[type="checkbox"] {
+    width: 18px;
+    height: 18px;
+    cursor: pointer;
+}
+
+@media (max-width: 768px) {
+    .profile-container {
+        grid-template-columns: 1fr;
+    }
+}
+</style>
 {% endblock %}

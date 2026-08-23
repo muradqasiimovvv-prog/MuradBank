@@ -1,44 +1,199 @@
 {% extends "base.html" %}
 
-{% block title %}Money Transfer - MuradBank{% endblock %}
+{% block title %}Pul Göndərmə - MuradBank{% endblock %}
 
 {% block content %}
 <div class="page-header">
-    <h1>Send Money</h1>
+    <h1>💸 Pul Göndərin</h1>
 </div>
 
-<div class="card max-width-500">
-    <div class="card-body">
-        <form method="POST" action="{{ url_for('transfer.send') }}" class="form">
-            <div class="form-group">
-                <label for="from_account_id">From Account</label>
-                <select name="from_account_id" id="from_account_id" required>
-                    <option value="">Select an account</option>
-                    {% for account in accounts %}
-                    <option value="{{ account.id }}">
-                        {{ account.account_number }} - {{ account.balance }} {{ account.currency }}
-                    </option>
-                    {% endfor %}
-                </select>
+<div class="transfer-container">
+    <div class="transfer-left">
+        <div class="card">
+            <div class="card-header">
+                <h2>Yeni Transfer</h2>
             </div>
+            <div class="card-body">
+                <form method="POST" action="{{ url_for('transfer.send') }}" class="form">
+                    <div class="form-group">
+                        <label for="from_account_id">Hansı Hesabdan</label>
+                        <select name="from_account_id" id="from_account_id" required>
+                            <option value="">Hesab seçin</option>
+                            {% for account in accounts %}
+                            <option value="{{ account.id }}">
+                                {{ account.account_number[-4:] }} - {{ "%.2f"|format(account.balance) }} {{ account.currency }}
+                            </option>
+                            {% endfor %}
+                        </select>
+                    </div>
 
-            <div class="form-group">
-                <label for="to_account_number">Recipient Account Number</label>
-                <input type="text" name="to_account_number" id="to_account_number" required>
+                    <div class="form-group">
+                        <label for="to_account_number">Alıcının Hesab Nömrəsi</label>
+                        <input type="text" name="to_account_number" id="to_account_number"
+                               placeholder="1002234567890" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="amount">Məbləğ (AZN)</label>
+                        <input type="number" name="amount" id="amount" step="0.01"
+                               placeholder="100.00" required>
+                        <small style="color: #999;">Komissiya: PULSUZ</small>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="description">Qeyd (İxtiyari)</label>
+                        <textarea name="description" id="description" rows="3"
+                                  placeholder="Transfer məqsədi..."></textarea>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary btn-block">Göndər</button>
+                </form>
             </div>
+        </div>
+    </div>
 
-            <div class="form-group">
-                <label for="amount">Amount (AZN)</label>
-                <input type="number" name="amount" id="amount" step="0.01" required>
+    <div class="transfer-right">
+        <!-- Suggested Beneficiaries -->
+        <div class="card">
+            <div class="card-header">
+                <h3>Tez Ötüşlər 💰</h3>
             </div>
-
-            <div class="form-group">
-                <label for="description">Description</label>
-                <textarea name="description" id="description" rows="3"></textarea>
+            <div class="card-body">
+                <div class="beneficiary-list">
+                    <div class="beneficiary-item">
+                        <div class="beneficiary-avatar">👨‍💼</div>
+                        <div class="beneficiary-info">
+                            <strong>Ələkbər</strong>
+                            <small>...7890</small>
+                        </div>
+                        <a href="#" class="btn btn-small">Seç</a>
+                    </div>
+                    <div class="beneficiary-item">
+                        <div class="beneficiary-avatar">👩‍💼</div>
+                        <div class="beneficiary-info">
+                            <strong>Aynur</strong>
+                            <small>...8901</small>
+                        </div>
+                        <a href="#" class="btn btn-small">Seç</a>
+                    </div>
+                </div>
+                <a href="#" style="display: block; text-align: center; margin-top: 1rem; color: var(--primary);">
+                    + Yeni Alıcı Əlavə Et
+                </a>
             </div>
+        </div>
 
-            <button type="submit" class="btn btn-primary btn-block">Send Money</button>
-        </form>
+        <!-- Transfer Info -->
+        <div class="card info-card">
+            <div class="info-item">
+                <span class="info-icon">✓</span>
+                <span>Anında ötüş</span>
+            </div>
+            <div class="info-item">
+                <span class="info-icon">✓</span>
+                <span>Sıfır komissiya</span>
+            </div>
+            <div class="info-item">
+                <span class="info-icon">✓</span>
+                <span>24/7 müşayiət</span>
+            </div>
+        </div>
     </div>
 </div>
 {% endblock %}
+
+<style>
+.transfer-container {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 2rem;
+    margin-top: 2rem;
+}
+
+.transfer-left, .transfer-right {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.beneficiary-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.beneficiary-item {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1rem;
+    background: #F8F9FA;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+}
+
+.beneficiary-item:hover {
+    background: #F0F0F0;
+}
+
+.beneficiary-avatar {
+    font-size: 28px;
+    width: 48px;
+    height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: white;
+    border-radius: 8px;
+}
+
+.beneficiary-info {
+    flex: 1;
+}
+
+.beneficiary-info strong {
+    display: block;
+    font-size: 14px;
+}
+
+.beneficiary-info small {
+    color: var(--gray);
+    font-size: 12px;
+}
+
+.info-card {
+    background: linear-gradient(135deg, #FFF3E0 0%, #FFE0B2 100%);
+}
+
+.info-item {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.75rem 0;
+    border-bottom: 1px solid rgba(255,255,255,0.5);
+    font-size: 13px;
+}
+
+.info-item:last-child {
+    border-bottom: none;
+}
+
+.info-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 24px;
+    height: 24px;
+    background: var(--primary);
+    color: white;
+    border-radius: 50%;
+    font-size: 12px;
+    font-weight: bold;
+}
+
+@media (max-width: 768px) {
+    .transfer-container {
+        grid-template-columns: 1fr;
+    }
+}
+</style>

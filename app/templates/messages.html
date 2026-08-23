@@ -1,39 +1,114 @@
 {% extends "base.html" %}
 
-{% block title %}Messages - MuradBank{% endblock %}
+{% block title %}Dəstək Mesajları - MuradBank{% endblock %}
 
 {% block content %}
 <div class="page-header">
-    <h1>Support Messages</h1>
-    <a href="{{ url_for('messages.new_message') }}" class="btn btn-primary">New Message</a>
+    <h1>💬 Dəstək Xidməti</h1>
+    <a href="{{ url_for('messages.new_message') }}" class="btn btn-primary">+ Yeni Mesaj</a>
 </div>
 
-<table class="table">
-    <thead>
-        <tr>
-            <th>Date</th>
-            <th>Subject</th>
-            <th>Category</th>
-            <th>Status</th>
-            <th>Action</th>
-        </tr>
-    </thead>
-    <tbody>
-        {% for msg in messages %}
-        <tr>
-            <td>{{ msg.created_at.strftime('%Y-%m-%d %H:%M') }}</td>
-            <td>{{ msg.subject }}</td>
-            <td>{{ msg.category or 'General' }}</td>
-            <td><span class="badge badge-{{ msg.status }}">{{ msg.status }}</span></td>
-            <td>
-                <a href="{{ url_for('messages.view_message', message_id=msg.id) }}" class="btn btn-small">View</a>
-            </td>
-        </tr>
-        {% else %}
-        <tr>
-            <td colspan="5">No messages</td>
-        </tr>
-        {% endfor %}
-    </tbody>
-</table>
+<div class="messages-container">
+    {% if messages %}
+        <div class="messages-list">
+            {% for msg in messages|reverse %}
+            <div class="message-card">
+                <div class="message-header">
+                    <div class="message-title">
+                        <h3>{{ msg.subject }}</h3>
+                        <span class="badge badge-{{ msg.status }}">{{ msg.status }}</span>
+                    </div>
+                    <small class="message-date">{{ msg.created_at.strftime('%d.%m.%Y %H:%M') }}</small>
+                </div>
+                <p class="message-category">
+                    📂 {{ msg.category or 'Ümumi' }}
+                </p>
+                <p class="message-preview">{{ msg.content[:100] }}...</p>
+                <div class="message-footer">
+                    <a href="{{ url_for('messages.view_message', message_id=msg.id) }}" class="btn btn-small">Bax</a>
+                    <small style="color: #999;">ID: {{ msg.id }}</small>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <div class="empty-state">
+            <p style="font-size: 48px;">💬</p>
+            <h3>Heç bir mesaj yoxdur</h3>
+            <p>Bizə yazın - dəstək komandasını dərhal cavab verəcəyik</p>
+            <a href="{{ url_for('messages.new_message') }}" class="btn btn-primary">Mesaj Göndər</a>
+        </div>
+    {% endif %}
+</div>
+
+<style>
+.messages-container {
+    margin-top: 2rem;
+}
+
+.messages-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+    gap: 1.5rem;
+}
+
+.message-card {
+    background: white;
+    border: 1px solid #E0E0E0;
+    border-radius: 12px;
+    padding: 1.5rem;
+    transition: all 0.3s ease;
+}
+
+.message-card:hover {
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    transform: translateY(-2px);
+}
+
+.message-header {
+    margin-bottom: 1rem;
+}
+
+.message-title {
+    display: flex;
+    justify-content: space-between;
+    align-items: start;
+    gap: 1rem;
+    margin-bottom: 0.5rem;
+}
+
+.message-title h3 {
+    margin: 0;
+    font-size: 16px;
+    color: var(--dark);
+    flex: 1;
+}
+
+.message-date {
+    color: var(--gray);
+    font-size: 12px;
+    white-space: nowrap;
+}
+
+.message-category {
+    font-size: 12px;
+    color: var(--primary);
+    margin: 0 0 0.75rem 0;
+}
+
+.message-preview {
+    color: #666;
+    font-size: 13px;
+    line-height: 1.5;
+    margin-bottom: 1rem;
+}
+
+.message-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 1rem;
+    border-top: 1px solid #F0F0F0;
+}
+</style>
 {% endblock %}

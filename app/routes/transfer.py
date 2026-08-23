@@ -1,3 +1,5 @@
+import math
+
 from flask import Blueprint, render_template, request, session, redirect, url_for, flash, jsonify
 from app.database import db
 from app.models import Account, Transaction
@@ -25,7 +27,8 @@ def send():
     if check:
         return check
 
-    # VULNERABLE: No CSRF token validation
+    # FIXED (PT-05): CSRFProtect (see app/__init__.py) rejects any POST missing
+    # a valid csrf_token before this view even runs.
     from_account_id = request.form.get('from_account_id')
     to_account_number = request.form.get('to_account_number')
     amount = request.form.get('amount')
@@ -49,9 +52,14 @@ def send():
         flash('Recipient account not found', 'danger')
         return redirect(url_for('transfer.index'))
 
-    # VULNERABLE: Weak validation - can transfer negative amounts
-    if amount <= 0:
-        flash('Amount must be positive', 'danger')
+    # FIXED (PT-08): reject NaN/inf as well as non-positive amounts, and cap
+    # the maximum transfer size as a sane business rule.
+    if not math.isfinite(amount) or amount <= 0:
+        flash('Amount must be a positive, finite number', 'danger')
+        return redirect(url_for('transfer.index'))
+
+    if amount > 1_000_000:
+        flash('Amount exceeds maximum allowed transfer', 'danger')
         return redirect(url_for('transfer.index'))
 
     if from_account.balance < amount:
@@ -78,7 +86,6 @@ def send():
 
 @transfer_bp.route('/api/accounts', methods=['GET'])
 def get_accounts():
-    """API endpoint - VULNERABLE to SQLi"""
     check = check_login()
     if check:
         return jsonify([])

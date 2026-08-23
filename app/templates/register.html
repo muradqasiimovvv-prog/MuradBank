@@ -39,6 +39,7 @@
             <p class="auth-subtitle">MuradBank ailəsinə qoşulun</p>
 
             <form method="POST" class="auth-form">
+                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
                 <div class="form-group">
                     <label for="full_name">Ad Soyadı</label>
                     <input type="text" id="full_name" name="full_name" placeholder="Tam ad" required autofocus>

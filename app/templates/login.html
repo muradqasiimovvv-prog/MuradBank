@@ -39,6 +39,7 @@
             <p class="auth-subtitle">Hesabınıza daxil olun</p>
 
             <form method="POST" class="auth-form">
+                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
                 <div class="form-group">
                     <label for="username">İstifadəçi Adı</label>
                     <input type="text" id="username" name="username" placeholder="İstifadəçi adınız" required autofocus>

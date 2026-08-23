@@ -1,10 +1,17 @@
 from flask import Flask
+from flask_wtf import CSRFProtect
 from app.config import config
 from app.database import db, init_db
+
+csrf = CSRFProtect()
 
 def create_app(config_name='development'):
     app = Flask(__name__)
     app.config.from_object(config[config_name])
+
+    # FIXED (PT-05): apply CSRF protection to every state-changing request
+    # app-wide, instead of only the transfer form.
+    csrf.init_app(app)
 
     # Initialize database
     db.init_app(app)
@@ -28,5 +35,12 @@ def create_app(config_name='development'):
     app.register_blueprint(profile_bp)
     app.register_blueprint(admin_bp)
     app.register_blueprint(api_bp)
+
+    # FIXED (PT-08): never leak stack traces/SQL/internal paths to the client,
+    # even if debug mode is ever accidentally left on.
+    @app.errorhandler(500)
+    def internal_error(error):
+        app.logger.exception('Unhandled server error')
+        return {'error': 'An unexpected error occurred'}, 500
 
     return app

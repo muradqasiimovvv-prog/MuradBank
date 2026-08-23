@@ -1,0 +1,82 @@
+{% extends "base.html" %}
+
+{% block title %}Dashboard - MuradBank{% endblock %}
+
+{% block content %}
+<div class="dashboard">
+    <h1>Welcome, {{ user.full_name }}!</h1>
+
+    <div class="dashboard-grid">
+        <div class="card total-balance">
+            <h3>Total Balance</h3>
+            <p class="balance">{{ total_balance }} AZN</p>
+        </div>
+
+        <div class="card accounts-count">
+            <h3>Your Accounts</h3>
+            <p class="count">{{ accounts|length }}</p>
+        </div>
+
+        <div class="card transactions-count">
+            <h3>Recent Transactions</h3>
+            <p class="count">{{ transactions|length }}</p>
+        </div>
+    </div>
+
+    <div class="dashboard-section">
+        <h2>Your Accounts</h2>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Account Number</th>
+                    <th>Type</th>
+                    <th>Balance</th>
+                    <th>Status</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for account in accounts %}
+                <tr>
+                    <td>{{ account.account_number }}</td>
+                    <td>{{ account.account_type }}</td>
+                    <td>{{ account.balance }} {{ account.currency }}</td>
+                    <td><span class="badge badge-{{ account.status }}">{{ account.status }}</span></td>
+                    <td>
+                        <a href="{{ url_for('accounts.view_account', account_id=account.id) }}" class="btn btn-small">View</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <div class="dashboard-section">
+        <h2>Recent Transactions</h2>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Date</th>
+                    <th>Amount</th>
+                    <th>Description</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for trans in transactions[-5:]|reverse %}
+                <tr>
+                    <td>{{ trans.created_at.strftime('%Y-%m-%d %H:%M') }}</td>
+                    <td>{{ trans.amount }} AZN</td>
+                    <td>{{ trans.description }}</td>
+                    <td><span class="badge badge-{{ trans.status }}">{{ trans.status }}</span></td>
+                </tr>
+                {% else %}
+                <tr>
+                    <td colspan="4">No transactions</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

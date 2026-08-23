@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+
+{% block title %}Admin Dashboard - MuradBank{% endblock %}
+
+{% block content %}
+<div class="admin-dashboard">
+    <h1>Admin Panel</h1>
+
+    <div class="stats-grid">
+        <div class="stat-card">
+            <h3>Total Users</h3>
+            <p class="stat-number">{{ users|length }}</p>
+        </div>
+        <div class="stat-card">
+            <h3>Total Accounts</h3>
+            <p class="stat-number">{{ accounts|length }}</p>
+        </div>
+        <div class="stat-card">
+            <h3>Total Transactions</h3>
+            <p class="stat-number">{{ transactions|length }}</p>
+        </div>
+        <div class="stat-card">
+            <h3>Support Messages</h3>
+            <p class="stat-number">{{ messages|length }}</p>
+        </div>
+    </div>
+
+    <div class="admin-links">
+        <a href="{{ url_for('admin.users') }}" class="btn btn-primary">Manage Users</a>
+        <a href="{{ url_for('admin.view_messages') }}" class="btn btn-primary">View Messages</a>
+    </div>
+</div>
+{% endblock %}

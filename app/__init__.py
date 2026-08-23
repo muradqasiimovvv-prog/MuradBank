@@ -1,0 +1,24 @@
+from flask import Flask
+from app.config import config
+from app.database import db, init_db
+
+def create_app(config_name='development'):
+    app = Flask(__name__)
+    app.config.from_object(config[config_name])
+
+    # Initialize database
+    init_db(app)
+
+    # Register blueprints
+    from app.routes import auth_bp, dashboard_bp, accounts_bp, transfer_bp, messages_bp, profile_bp, admin_bp, api_bp
+
+    app.register_blueprint(auth_bp)
+    app.register_blueprint(dashboard_bp)
+    app.register_blueprint(accounts_bp)
+    app.register_blueprint(transfer_bp)
+    app.register_blueprint(messages_bp)
+    app.register_blueprint(profile_bp)
+    app.register_blueprint(admin_bp)
+    app.register_blueprint(api_bp)
+
+    return app

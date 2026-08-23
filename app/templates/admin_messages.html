@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+
+{% block title %}Messages - MuradBank Admin{% endblock %}
+
+{% block content %}
+<div class="page-header">
+    <h1>Support Messages</h1>
+    <a href="{{ url_for('admin.dashboard') }}" class="btn btn-secondary">Back</a>
+</div>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>User</th>
+            <th>Subject</th>
+            <th>Category</th>
+            <th>Date</th>
+            <th>Status</th>
+            <th>Preview</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for msg in messages %}
+        <tr>
+            <td>{{ msg.id }}</td>
+            <td>{{ msg.author.username }}</td>
+            <td>{{ msg.subject }}</td>
+            <td>{{ msg.category or '-' }}</td>
+            <td>{{ msg.created_at.strftime('%Y-%m-%d %H:%M') }}</td>
+            <td><span class="badge badge-{{ msg.status }}">{{ msg.status }}</span></td>
+            <td>
+                <!-- VULNERABLE: Content rendered without escaping -->
+                <div style="max-width: 300px; overflow: hidden;">
+                    {{ msg.content|safe }}
+                </div>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

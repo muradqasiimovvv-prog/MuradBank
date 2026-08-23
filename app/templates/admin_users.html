@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+
+{% block title %}Manage Users - MuradBank{% endblock %}
+
+{% block content %}
+<div class="page-header">
+    <h1>Manage Users</h1>
+    <a href="{{ url_for('admin.dashboard') }}" class="btn btn-secondary">Back</a>
+</div>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Username</th>
+            <th>Email</th>
+            <th>Full Name</th>
+            <th>Admin</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for user in users %}
+        <tr>
+            <td>{{ user.id }}</td>
+            <td>{{ user.username }}</td>
+            <td>{{ user.email }}</td>
+            <td>{{ user.full_name }}</td>
+            <td>
+                <input type="checkbox" {% if user.is_admin %}checked{% endif %}
+                       data-user-id="{{ user.id }}" class="admin-toggle">
+            </td>
+            <td>
+                <a href="#" class="btn btn-small">View</a>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<script>
+document.querySelectorAll('.admin-toggle').forEach(checkbox => {
+    checkbox.addEventListener('change', function() {
+        const userId = this.dataset.userId;
+        const isAdmin = this.checked;
+        // VULNERABLE: Making admin changes without proper CSRF protection
+        fetch('{{ url_for("admin.edit_user", user_id="ID") }}'.replace('ID', userId), {
+            method: 'POST',
+            body: new FormData()
+        });
+    });
+});
+</script>
+{% endblock %}

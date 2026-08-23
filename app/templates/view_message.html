@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+{% block title %}{{ message.subject }} - MuradBank{% endblock %}
+
+{% block content %}
+<div class="page-header">
+    <h1>{{ message.subject }}</h1>
+    <a href="{{ url_for('messages.index') }}" class="btn btn-secondary">Back</a>
+</div>
+
+<div class="card">
+    <div class="card-header">
+        <span class="badge">{{ message.status }}</span>
+        <span class="text-muted">{{ message.created_at.strftime('%Y-%m-%d %H:%M') }}</span>
+    </div>
+    <div class="card-body">
+        <p><strong>Category:</strong> {{ message.category or 'General' }}</p>
+        <hr>
+        <div class="message-content">
+            <!-- VULNERABLE: XSS - content is not escaped -->
+            {{ message.content|safe }}
+        </div>
+    </div>
+</div>
+{% endblock %}

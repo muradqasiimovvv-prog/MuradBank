@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+
+{% block title %}Messages - MuradBank{% endblock %}
+
+{% block content %}
+<div class="page-header">
+    <h1>Support Messages</h1>
+    <a href="{{ url_for('messages.new_message') }}" class="btn btn-primary">New Message</a>
+</div>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Date</th>
+            <th>Subject</th>
+            <th>Category</th>
+            <th>Status</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for msg in messages %}
+        <tr>
+            <td>{{ msg.created_at.strftime('%Y-%m-%d %H:%M') }}</td>
+            <td>{{ msg.subject }}</td>
+            <td>{{ msg.category or 'General' }}</td>
+            <td><span class="badge badge-{{ msg.status }}">{{ msg.status }}</span></td>
+            <td>
+                <a href="{{ url_for('messages.view_message', message_id=msg.id) }}" class="btn btn-small">View</a>
+            </td>
+        </tr>
+        {% else %}
+        <tr>
+            <td colspan="5">No messages</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

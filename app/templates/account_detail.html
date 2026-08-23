@@ -1,0 +1,70 @@
+{% extends "base.html" %}
+
+{% block title %}Account Details - MuradBank{% endblock %}
+
+{% block content %}
+<div class="page-header">
+    <h1>Account Details</h1>
+    <a href="{{ url_for('accounts.index') }}" class="btn btn-secondary">Back</a>
+</div>
+
+<div class="card">
+    <div class="card-body">
+        <h2>{{ account.account_number }}</h2>
+        <table class="detail-table">
+            <tr>
+                <td><strong>Account Type:</strong></td>
+                <td>{{ account.account_type }}</td>
+            </tr>
+            <tr>
+                <td><strong>Balance:</strong></td>
+                <td>{{ account.balance }} {{ account.currency }}</td>
+            </tr>
+            <tr>
+                <td><strong>IBAN:</strong></td>
+                <td>{{ account.iban or 'N/A' }}</td>
+            </tr>
+            <tr>
+                <td><strong>Status:</strong></td>
+                <td>{{ account.status }}</td>
+            </tr>
+            <tr>
+                <td><strong>Created:</strong></td>
+                <td>{{ account.created_at.strftime('%Y-%m-%d') }}</td>
+            </tr>
+        </table>
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-header">
+        <h3>Transaction History</h3>
+    </div>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Date</th>
+                <th>Type</th>
+                <th>Amount</th>
+                <th>Description</th>
+                <th>Status</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for trans in transactions %}
+            <tr>
+                <td>{{ trans.created_at.strftime('%Y-%m-%d %H:%M') }}</td>
+                <td>{{ trans.transaction_type }}</td>
+                <td>{{ trans.amount }} AZN</td>
+                <td>{{ trans.description }}</td>
+                <td>{{ trans.status }}</td>
+            </tr>
+            {% else %}
+            <tr>
+                <td colspan="5">No transactions</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

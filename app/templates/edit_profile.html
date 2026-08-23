@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+
+{% block title %}Edit Profile - MuradBank{% endblock %}
+
+{% block content %}
+<div class="page-header">
+    <h1>Edit Profile</h1>
+    <a href="{{ url_for('profile.index') }}" class="btn btn-secondary">Cancel</a>
+</div>
+
+<div class="card max-width-500">
+    <div class="card-body">
+        <form method="POST" enctype="multipart/form-data" class="form">
+            <div class="form-group">
+                <label for="full_name">Full Name</label>
+                <input type="text" name="full_name" id="full_name" value="{{ user.full_name }}" required>
+            </div>
+
+            <div class="form-group">
+                <label for="phone">Phone</label>
+                <input type="tel" name="phone" id="phone" value="{{ user.phone or '' }}">
+            </div>
+
+            <div class="form-group">
+                <label for="avatar">Avatar</label>
+                <input type="file" name="avatar" id="avatar">
+                <small>PNG, JPG, GIF (max 16MB)</small>
+            </div>
+
+            <button type="submit" class="btn btn-primary btn-block">Save Changes</button>
+        </form>
+    </div>
+</div>
+{% endblock %}

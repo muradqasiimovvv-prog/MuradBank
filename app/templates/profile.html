@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+
+{% block title %}Profile - MuradBank{% endblock %}
+
+{% block content %}
+<div class="page-header">
+    <h1>My Profile</h1>
+    <a href="{{ url_for('profile.edit') }}" class="btn btn-primary">Edit Profile</a>
+</div>
+
+<div class="card max-width-500">
+    <div class="card-body">
+        <div class="profile-avatar">
+            <img src="{{ url_for('static', filename='uploads/' + user.avatar) }}" alt="Avatar" class="avatar">
+        </div>
+
+        <table class="detail-table">
+            <tr>
+                <td><strong>Username:</strong></td>
+                <td>{{ user.username }}</td>
+            </tr>
+            <tr>
+                <td><strong>Full Name:</strong></td>
+                <td>{{ user.full_name }}</td>
+            </tr>
+            <tr>
+                <td><strong>Email:</strong></td>
+                <td>{{ user.email }}</td>
+            </tr>
+            <tr>
+                <td><strong>Phone:</strong></td>
+                <td>{{ user.phone or 'Not set' }}</td>
+            </tr>
+            <tr>
+                <td><strong>Account Created:</strong></td>
+                <td>{{ user.created_at.strftime('%Y-%m-%d') }}</td>
+            </tr>
+        </table>
+    </div>
+</div>
+{% endblock %}
